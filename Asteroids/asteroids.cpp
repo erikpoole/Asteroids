@@ -48,9 +48,6 @@
  What data will they need to store?
  In what order will you implement them?
  What tests will you write along the way to verify that you're making progress?
-
- 
- 
 */
 
 #include <iostream>
@@ -62,8 +59,13 @@
 
 
 int main(int argc, const char * argv[]) {
+    // create the window sized to your screen
+    sf::ContextSettings settings;
+    settings.antialiasingLevel = 8; //antialaiasing for smoother shapes
     
-    sf::RenderWindow window(sf::VideoMode(800,600), "My window");
+    sf::RenderWindow window(sf::VideoMode(sf::VideoMode::getDesktopMode().width, sf::VideoMode::getDesktopMode().height), "Asteroids",sf::Style::Default, settings);
+    window.setVerticalSyncEnabled(true); // vertical synchronization, call it once, after creating the window
+    window.setMouseCursorVisible(false); //hide cursor
     
     while (window.isOpen()) {
         sf::Event event;
