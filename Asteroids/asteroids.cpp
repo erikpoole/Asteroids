@@ -1,5 +1,6 @@
+//  main.cpp
+//  asteroids
 
-//
 //  Created by Ben Trueman on 9/17/18.
 //  Copyright © 2018 Ben Trueman. All rights reserved.
 //  Team: Ben Trueman & Erik Poole
@@ -52,6 +53,29 @@
  
 */
 
-int main(int argc, const char * argv[]) {
+#include <iostream>
+#include <SFML/Graphics.hpp>
+#include <SFML/Window.hpp>
+#include <SFML/System.hpp>
 
+#include "ship.hpp"
+
+
+int main(int argc, const char * argv[]) {
+    
+    sf::RenderWindow window(sf::VideoMode(800,600), "My window");
+    
+    while (window.isOpen()) {
+        sf::Event event;
+        while (window.pollEvent(event)) {
+            if (event.type == sf::Event::Closed) {
+                window.close();
+            }
+        }
+        window.clear(sf::Color::Black);
+        
+        window.draw(Ship().shape);
+        
+        window.display();
+    }
 }
