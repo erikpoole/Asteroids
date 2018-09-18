@@ -5,7 +5,6 @@
 //  Copyright © 2018 Ben Trueman. All rights reserved.
 //  Team: Ben Trueman & Erik Poole
 
-
 /*
  class Asteroid{
  private:
@@ -13,41 +12,70 @@
  
  public:
     constructor
+    Destroy/Construct Smaller Asteroids
+    method - Generate Random Asteroids
+    method - Move Asteroids
  
  }
  
  class Ship{
- private:
+    private:
     int health
-    int size;
+    ConvexShape shape;
  
  public:
     constructor
     destructor/destroy ship
+    method - Move user input movement (WASD? Mouse?)    - speed?
+    method - rotation
+    method - fire laser
+    method - move across screen border
  
  }
+ 
  
  class Laser{
  private:
     int size;
+    int timeofsurivival;
  
  public:
     constructor
  
  }
+ 
  
  class Collisions{
  private:
  
  public:
- 
+    method - Asteroid/Ship Collision
+    method - Asteroid/Laser Collision
  }
  
- Your plan should include at least the following information:
- What methods will they need?
- What data will they need to store?
- In what order will you implement them?
- What tests will you write along the way to verify that you're making progress?
+ 
+ Order to Implement -
+ Ship
+ Asteroid
+ Collision
+ Laser
+ 
+ Tests -
+ Moving ship orthagonally
+ Rotating ship
+ Moving ship across borders
+ 
+ Creating and Moving Asteroid automatically
+ Test Asteroid Destruction (time delay, no collisions yet)
+ 
+ Collisions between asteroid and ship
+ Collisions between asteroid and asteroid (?)
+ 
+ Fire Laser from point (shifting direction)
+ Fire Laser from front of ship
+ Laser appropriately decays over time
+ Collision between Laser and asteroid
+ 
 */
 
 #include <iostream>
