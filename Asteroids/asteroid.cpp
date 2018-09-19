@@ -14,7 +14,7 @@
 #include <random>
 #include <ctime>
 
-Asteroid:: Asteroid(){
+Asteroid:: Asteroid(int radius, int x, int y){
     asteroid.setRadius(100); //50,100,150
     asteroid.setPosition(x, y);
     asteroid.setOrigin(asteroid.getRadius(),asteroid.getRadius()); //make circle rotate around its center

@@ -16,7 +16,7 @@
 class Asteroid {
 public:
     //constructor
-    Asteroid();
+    Asteroid(int radius, int x, int y);
     
     // dt, change in time
     void update(float dt);
