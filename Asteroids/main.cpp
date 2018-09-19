@@ -82,7 +82,6 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/Window.hpp>
 #include <SFML/System.hpp>
-
 #include "ship.hpp"
 #include "asteroid.hpp"
 
@@ -92,16 +91,20 @@ int main(int argc, const char * argv[]) {
     sf::ContextSettings settings;
     settings.antialiasingLevel = 8; //antialaiasing for smoother shapes
     
-    int windowHeight = sf::VideoMode::getDesktopMode().height;
-    int windowWidth = sf::VideoMode::getDesktopMode().width;
+    sf::Vector2f resolution;
+    resolution.x = sf::VideoMode::getDesktopMode().width;
+    resolution.y = sf::VideoMode::getDesktopMode().height;
     
-    /*
+
     sf::Texture backgroundTexture;
-    if (!backgroundTexture.loadFromFile("background.jpg")){
+    if (!backgroundTexture.loadFromFile("background2.jpg")){
         return -1;
     }
-*/
-    sf::RenderWindow window(sf::VideoMode(sf::VideoMode::getDesktopMode().width, sf::VideoMode::getDesktopMode().height), "Asteroids",sf::Style::Default, settings);
+
+    sf::Sprite backgroundSprite;
+    backgroundSprite.setTexture(backgroundTexture);
+
+    sf::RenderWindow window(sf::VideoMode(resolution.x, resolution.y), "Asteroids", sf::Style::Fullscreen, settings);
     window.setVerticalSyncEnabled(true); // vertical synchronization, call it once, after creating the window
     window.setMouseCursorVisible(false); //hide cursor
     
@@ -112,11 +115,15 @@ int main(int argc, const char * argv[]) {
     Ship ourShip = Ship();
     ourShip.getShape().move(sf::VideoMode::getDesktopMode().width/2, sf::VideoMode::getDesktopMode().height/2);
     
+    sf::Clock clock;
+    
     while (window.isOpen()) {
+        sf::Time dt = clock.restart();
+        float dtAsSeconds = dt.asSeconds();
         
         sf::Event event;
         while (window.pollEvent(event)) {
-
+            
             /////USER INPUT SWITCHES/////
             switch (event.type)
             {
@@ -143,17 +150,19 @@ int main(int argc, const char * argv[]) {
                     break;
             }
         }
-        
         window.clear(sf::Color::Black);
+        window.draw(backgroundSprite);
 
         window.draw(ourShip.getShape());
        
-        sf::CircleShape asteroid(150); //50,100, 150
-        asteroid.setOrigin(sf::Vector2f(-windowWidth/2, -windowHeight/2+400));
-
+        //every [ ] seconds draw an asteroid from the vector of asteroids
         Asteroid1.draw(window);
+        Asteroid1.update(dtAsSeconds);
         Asteroid2.draw(window);
+        Asteroid2.update(dtAsSeconds);
         Asteroid3.draw(window);
+        Asteroid3.update(dtAsSeconds);
+
         
         window.display();
     }
