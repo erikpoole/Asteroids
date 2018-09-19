@@ -17,15 +17,19 @@
 class Ship{
 private:
     int health;
-    int size;
+    float rotation;
+    
+    sf::ConvexShape shape;
 
     
 public:
     //constructor
     Ship();
-    sf::ConvexShape shape;
+    
+    sf::ConvexShape& getShape() {return shape;}
     
     //destructor/destroy ship
+    
     
 };
 

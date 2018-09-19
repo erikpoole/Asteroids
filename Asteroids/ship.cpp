@@ -12,15 +12,18 @@
 #include <SFML/System.hpp>
 
 
+
 Ship::Ship() {
     shape.setPointCount(4);
+    shape.setPoint(0, sf::Vector2f(0, -40));
+    shape.setPoint(1, sf::Vector2f(40, 80));
+    shape.setPoint(2, sf::Vector2f(0, 40));
+    shape.setPoint(3, sf::Vector2f(-40, 80));
     
-    shape.setPoint(0, sf::Vector2f(100, 100));
-    shape.setPoint(1, sf::Vector2f(150, 300));
-    shape.setPoint(2, sf::Vector2f(100, 250));
-    shape.setPoint(3, sf::Vector2f(50, 300));
     
+    rotation = 0;
 }
+
 
  
 /*

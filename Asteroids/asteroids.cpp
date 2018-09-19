@@ -85,8 +85,8 @@
 
 #include "ship.hpp"
 
-
 int main(int argc, const char * argv[]) {
+    
     // create the window sized to your screen
     sf::ContextSettings settings;
     settings.antialiasingLevel = 8; //antialaiasing for smoother shapes
@@ -95,17 +95,47 @@ int main(int argc, const char * argv[]) {
     window.setVerticalSyncEnabled(true); // vertical synchronization, call it once, after creating the window
     window.setMouseCursorVisible(false); //hide cursor
     
+    
+
+    Ship ourShip = Ship();
+    ourShip.getShape().move(sf::VideoMode::getDesktopMode().width/2, sf::VideoMode::getDesktopMode().height/2);
+    
     while (window.isOpen()) {
+        
         sf::Event event;
         while (window.pollEvent(event)) {
-            if (event.type == sf::Event::Closed) {
-                window.close();
+
+            /////USER INPUT SWITCHES/////
+            switch (event.type)
+            {
+                case sf::Event::Closed:
+                    window.close();
+                    break;
+                case sf::Event::KeyPressed:
+                    switch (event.key.code)
+                {
+                    case sf::Keyboard::Left:
+                        ourShip.getShape().rotate(10);
+                        break;
+                    case sf::Keyboard::Right:
+                        ourShip.getShape().rotate(-10);
+                        break;
+                    case sf::Keyboard::Up:
+                        ourShip.getShape().move(100, 100);
+                        break;
+                    default:
+                        break;
+                }
+                default:
+                    break;
             }
         }
+        
         window.clear(sf::Color::Black);
         
-        window.draw(Ship().shape);
+        window.draw(ourShip.getShape());
         
         window.display();
     }
 }
+
