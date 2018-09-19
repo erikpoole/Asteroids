@@ -25,6 +25,7 @@ public:
 private:
     sf::CircleShape asteroid;
     sf::Texture asteroidTexture;
+    sf::Vector2f position;
 
 };
 
