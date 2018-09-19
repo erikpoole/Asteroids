@@ -83,8 +83,12 @@
 #include <SFML/Window.hpp>
 #include <SFML/System.hpp>
 
+#include <math.h>
+
 #include "ship.hpp"
 #include "asteroid.hpp"
+#include "world.hpp"
+
 
 int main(int argc, const char * argv[]) {
     
@@ -118,35 +122,32 @@ int main(int argc, const char * argv[]) {
         while (window.pollEvent(event)) {
 
             /////USER INPUT SWITCHES/////
-            switch (event.type)
-            {
-                case sf::Event::Closed:
+            if (event.type == sf::Event::Closed) {
                     window.close();
                     break;
-                case sf::Event::KeyPressed:
-                    switch (event.key.code)
-                {
-                    case sf::Keyboard::Left:
-                        ourShip.getShape().rotate(10);
-                        ourShip.getRotation(10);
-                        break;
-                    case sf::Keyboard::Right:
-                        ourShip.getShape().rotate(-10);
-                        break;
-                    case sf::Keyboard::Up:
-                        ourShip.getShape().move(100, 100);
-                        break;
-                    default:
-                        break;
-                }
-                default:
-                    break;
             }
+        }
+        
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)) {
+            window.close();
+            break;
+        }
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
+            ourShip.getShape().rotate(4);
+            ourShip.getRotation(-4);
+        }
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
+            ourShip.getShape().rotate(-4);
+            ourShip.getRotation(4);
+        }
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) {
+            ourShip.moveShip();
         }
         
         window.clear(sf::Color::Black);
 
         window.draw(ourShip.getShape());
+
        
         sf::CircleShape asteroid(150); //50,100, 150
         asteroid.setOrigin(sf::Vector2f(-windowWidth/2, -windowHeight/2+400));
