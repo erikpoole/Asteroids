@@ -104,7 +104,9 @@ int main(int argc, const char * argv[]) {
     window.setVerticalSyncEnabled(true); // vertical synchronization, call it once, after creating the window
     window.setMouseCursorVisible(false); //hide cursor
     
-    
+    Asteroid Asteroid1(50, 1000, 1000);
+    Asteroid Asteroid2(150, 500, 500);
+    Asteroid Asteroid3(100, 2000, 1000);
 
     Ship ourShip = Ship();
     ourShip.getShape().move(sf::VideoMode::getDesktopMode().width/2, sf::VideoMode::getDesktopMode().height/2);
@@ -148,9 +150,9 @@ int main(int argc, const char * argv[]) {
         sf::CircleShape asteroid(150); //50,100, 150
         asteroid.setOrigin(sf::Vector2f(-windowWidth/2, -windowHeight/2+400));
 
-        Asteroid myAsteroid;
-        myAsteroid.draw(window);
-        
+        Asteroid1.draw(window);
+        Asteroid2.draw(window);
+        Asteroid3.draw(window);
         
         window.display();
     }
