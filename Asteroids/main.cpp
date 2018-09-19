@@ -95,11 +95,12 @@ int main(int argc, const char * argv[]) {
     int windowHeight = sf::VideoMode::getDesktopMode().height;
     int windowWidth = sf::VideoMode::getDesktopMode().width;
     
+    /*
     sf::Texture backgroundTexture;
     if (!backgroundTexture.loadFromFile("background.jpg")){
         return -1;
     }
-
+*/
     sf::RenderWindow window(sf::VideoMode(sf::VideoMode::getDesktopMode().width, sf::VideoMode::getDesktopMode().height), "Asteroids",sf::Style::Default, settings);
     window.setVerticalSyncEnabled(true); // vertical synchronization, call it once, after creating the window
     window.setMouseCursorVisible(false); //hide cursor
@@ -127,6 +128,7 @@ int main(int argc, const char * argv[]) {
                 {
                     case sf::Keyboard::Left:
                         ourShip.getShape().rotate(10);
+                        ourShip.getRotation(10);
                         break;
                     case sf::Keyboard::Right:
                         ourShip.getShape().rotate(-10);

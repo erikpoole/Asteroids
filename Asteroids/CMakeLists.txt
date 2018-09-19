@@ -28,7 +28,7 @@ project(asteroids)
 #
 #add_executables that were commented out - asteroids.cpp world.cpp player.cpp bullet.cpp asteroid.cpp collisions.cpp)
 #
-add_executable(asteroids asteroids.cpp ship.cpp) 
+add_executable(asteroids main.cpp ship.cpp ship.hpp asteroid.cpp asteroid.hpp) 
 
 #create a folder named "cmake" at the top of your project and put the
 #findSFML.cmake file in it.  This line tells Cmake to look there for
