@@ -84,6 +84,7 @@
 #include <SFML/System.hpp>
 
 #include "ship.hpp"
+#include "asteroid.hpp"
 
 int main(int argc, const char * argv[]) {
     
@@ -91,6 +92,14 @@ int main(int argc, const char * argv[]) {
     sf::ContextSettings settings;
     settings.antialiasingLevel = 8; //antialaiasing for smoother shapes
     
+    int windowHeight = sf::VideoMode::getDesktopMode().height;
+    int windowWidth = sf::VideoMode::getDesktopMode().width;
+    
+    sf::Texture backgroundTexture;
+    if (!backgroundTexture.loadFromFile("background.jpg")){
+        return -1;
+    }
+
     sf::RenderWindow window(sf::VideoMode(sf::VideoMode::getDesktopMode().width, sf::VideoMode::getDesktopMode().height), "Asteroids",sf::Style::Default, settings);
     window.setVerticalSyncEnabled(true); // vertical synchronization, call it once, after creating the window
     window.setMouseCursorVisible(false); //hide cursor
@@ -132,8 +141,16 @@ int main(int argc, const char * argv[]) {
         }
         
         window.clear(sf::Color::Black);
+
         
         window.draw(ourShip.getShape());
+       
+        sf::CircleShape asteroid(150); //50,100, 150
+        asteroid.setOrigin(sf::Vector2f(-windowWidth/2, -windowHeight/2+400));
+
+        Asteroid myAsteroid;
+        myAsteroid.draw(window);
+        
         
         window.display();
     }
