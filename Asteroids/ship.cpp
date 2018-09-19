@@ -24,11 +24,3 @@ Ship::Ship() {
     rotation = 0;
 }
 
-
- 
-/*
- sf::CircleShape shape(100);
- shape.setFillColor(sf::Color(100,100,100));
- window.draw(shape);
- */
-

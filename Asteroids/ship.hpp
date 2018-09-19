@@ -18,7 +18,6 @@ class Ship{
 private:
     int health;
     float rotation;
-    
     sf::ConvexShape shape;
 
     
@@ -26,6 +25,7 @@ public:
     //constructor
     Ship();
     
+    float& getRotation (float change) {return rotation += change;}
     sf::ConvexShape& getShape() {return shape;}
     
     //destructor/destroy ship
