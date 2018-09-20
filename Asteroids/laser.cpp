@@ -12,6 +12,9 @@
 #include <SFML/System.hpp>
 #include <math.h>
 
+
+
+///Default Constructor for Laser - inputLocation & inputRotation based on ship class values.  Speed defined as 16, size defined as sf::Vector2f(5,-50)
 Laser::Laser(sf::Vector2f inputLocation, float inputRotation) {
     shape.setSize(sf::Vector2f(5,-50));
     shape.setPosition(inputLocation);
@@ -20,6 +23,6 @@ Laser::Laser(sf::Vector2f inputLocation, float inputRotation) {
     speed = 16;
     lifetime.restart();
      
-    sf::FloatRect bounds = shape.getGlobalBounds();
+                        //sf::FloatRect bounds = shape.getGlobalBounds();
     
 }

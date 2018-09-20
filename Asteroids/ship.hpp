@@ -14,6 +14,7 @@
 
 #include <stdio.h>
 
+///Player class that responds to user input
 class Ship{
 private:
     sf::ConvexShape shape;
@@ -28,14 +29,28 @@ public:
     //constructor
     Ship();
     
+    ///returns shape (and by extension - location)
     sf::ConvexShape& getShape() {return shape;}
+    
+    ///updates rotation based on input 'change'
     float& getRotation(float change) {return rotation += change;}
+    
+    /// returns present speed
     const float& getSpeed() {return speed;}
+    
+    /// returns present rotation
     const float& getRotation() {return rotation;}
+    
+    
+    
                     //const sf::FloatRect& getBounds() {return bounds;}
     
+    
+    
+    
+    
+    ///moves ship based on present speed and rotation
     void moveShip();
-    //fireLaser();
 };
 
 
