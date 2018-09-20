@@ -123,10 +123,13 @@ int main(int argc, const char * argv[]) {
     Asteroid Asteroid3(100, 2000, 1000);
 
     Ship ourShip = Ship();
-    std::vector<Laser> laserVector = {};
     ourShip.getShape().move(sf::VideoMode::getDesktopMode().width/2, sf::VideoMode::getDesktopMode().height/2);
     
+    std::vector<Laser> laserVector = {};
+    sf::Clock laserClock;
+
     sf::Clock clock;
+
     
 ////////////////////////////////////////***USER INPUT SETUP***////////////////////////////////////////
     
@@ -142,6 +145,7 @@ int main(int argc, const char * argv[]) {
                     window.close();
                     break;
             }
+            
         }
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)) {
             window.close();
@@ -157,12 +161,14 @@ int main(int argc, const char * argv[]) {
             ourShip.getRotation(-4);
         }
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) {
-            ourShip.moveShip();
+            //ourShip.moveShip();
+            moveObject(ourShip.getShape(), ourShip.getRotation(), ourShip.getSpeed());
         }
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) {
-            //ourShip.fireLaser();
-            Laser testLaser = Laser(ourShip.getShape().getPosition(),ourShip.getRotation());
-            laserVector.push_back(testLaser);
+            if (laserClock.getElapsedTime().asSeconds() > .4) {
+                laserClock.restart();
+                laserVector.push_back(Laser(ourShip.getShape().getPosition(),ourShip.getRotation()));
+            }
         }
         
         
@@ -173,11 +179,11 @@ int main(int argc, const char * argv[]) {
 
         window.draw(ourShip.getShape());
         
-        //will clean up
         for (Laser& specificLaser : laserVector) {
-            float rotation = specificLaser.getRotation();
-            window.draw(specificLaser.getShape());
-            specificLaser.getShape().move(-sin(rotation/57.2958)*15, -cos(rotation/57.2958)*15);
+            if (specificLaser.getLifetime().getElapsedTime().asSeconds() < 1.5) {
+                moveObject(specificLaser.getShape(), specificLaser.getRotation(), specificLaser.getSpeed());
+                window.draw(specificLaser.getShape());
+            }
         }
         
         //every [ ] seconds draw an asteroid from the vector of asteroids

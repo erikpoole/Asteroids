@@ -18,14 +18,17 @@ class Laser {
 private:
     sf::RectangleShape shape;
     float rotation;
+    float speed;
+    sf::Clock lifetime;
     
 public:
     //constructor
     Laser(sf::Vector2f location, float rotation);
   
     sf::RectangleShape& getShape() {return shape;}
-    //sf::RectangleShape& getShape(float move) {return rotation += change;}
     float& getRotation() {return rotation;}
+    float& getSpeed() {return speed;}
+    sf::Clock& getLifetime() {return lifetime;}
     
 
     

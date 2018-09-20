@@ -17,11 +17,8 @@ Laser::Laser(sf::Vector2f inputLocation, float inputRotation) {
     shape.setPosition(inputLocation);
     shape.setRotation(-inputRotation);
     rotation = inputRotation;
-    
-    /*
-     shape.move(-sin(rotation/57.2958)*8, -cos(rotation/57.2958)*8);
-    borderCrosser(shape);
-    */
+    speed = 16;
+    lifetime.restart();
      
     sf::FloatRect bounds = shape.getGlobalBounds();
     

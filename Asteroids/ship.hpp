@@ -16,10 +16,13 @@
 
 class Ship{
 private:
-    int health;
-    float rotation;
     sf::ConvexShape shape;
     sf::FloatRect bounds;
+    
+    float rotation;
+    float speed;
+    int health;
+
      
 public:
     //constructor
@@ -27,6 +30,7 @@ public:
     
     sf::ConvexShape& getShape() {return shape;}
     float& getRotation(float change) {return rotation += change;}
+    const float& getSpeed() {return speed;}
     const float& getRotation() {return rotation;}
     
     void moveShip();

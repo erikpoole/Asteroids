@@ -15,6 +15,8 @@
 #include <stdio.h>
 
 
+void moveObject(sf::Shape& input, float angle, float speed);
+
 void borderCrosser(sf::Shape& input);
 
 #endif /* world_hpp */

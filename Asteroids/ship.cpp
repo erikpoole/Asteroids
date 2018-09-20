@@ -27,17 +27,10 @@ Ship::Ship() {
     sf::FloatRect bounds = shape.getGlobalBounds();
     
     rotation = 0;
-    int health = 3;
+    speed = 8;
+    health = 3;
+    
+
+    
 
 }
-
-
-//57.2958 is approximate conversion from degrees to radians
-void Ship::moveShip() {
-    shape.move(-sin(rotation/57.2958)*8, -cos(rotation/57.2958)*8);
-    borderCrosser(shape);
-}
-
-//void Ship::fireLaser() {
-  //  Laser newLaser = Laser(shape.getPosition());
-//}

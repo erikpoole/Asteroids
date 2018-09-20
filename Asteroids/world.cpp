@@ -10,6 +10,16 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/Window.hpp>
 #include <SFML/System.hpp>
+#include <math.h>
+
+
+
+
+//57.2958 is approximate conversion from degrees to radians
+void moveObject(sf::Shape& object, float angle, float speed) {
+    object.move(-sin(angle/57.2958)*speed, -cos(angle/57.2958)*speed);
+    borderCrosser(object);
+}
 
 
 void borderCrosser(sf::Shape& input) {
