@@ -17,6 +17,8 @@
 #include "world.hpp"
 #include "laser.hpp"
 
+
+///Default Constructor for ship.  Speed defined as 8, Rotation as 0, Health defined as 3, defines shape;
 Ship::Ship() {
     shape.setPointCount(4);
     shape.setPoint(0, sf::Vector2f(0, -40));
