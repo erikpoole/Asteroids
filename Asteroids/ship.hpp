@@ -17,7 +17,7 @@
 class Ship{
 private:
     sf::ConvexShape shape;
-    sf::FloatRect bounds;
+                //sf::FloatRect bounds;
     
     float rotation;
     float speed;
@@ -32,6 +32,7 @@ public:
     float& getRotation(float change) {return rotation += change;}
     const float& getSpeed() {return speed;}
     const float& getRotation() {return rotation;}
+                    //const sf::FloatRect& getBounds() {return bounds;}
     
     void moveShip();
     //fireLaser();

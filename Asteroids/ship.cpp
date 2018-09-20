@@ -24,7 +24,7 @@ Ship::Ship() {
     shape.setPoint(2, sf::Vector2f(0, 40));
     shape.setPoint(3, sf::Vector2f(-40, 80));
     
-    sf::FloatRect bounds = shape.getGlobalBounds();
+                //bounds = shape.getGlobalBounds();
     
     rotation = 0;
     speed = 8;

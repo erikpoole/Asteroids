@@ -122,13 +122,16 @@ int main(int argc, const char * argv[]) {
     Asteroid Asteroid2(150, 500, 500);
     Asteroid Asteroid3(100, 2000, 1000);
 
-    Ship ourShip = Ship();
+    Ship ourShip;
     ourShip.getShape().move(sf::VideoMode::getDesktopMode().width/2, sf::VideoMode::getDesktopMode().height/2);
     
     std::vector<Laser> laserVector = {};
     sf::Clock laserClock;
 
     sf::Clock clock;
+    
+    sf::CircleShape collisionTest(500);
+
 
     
 ////////////////////////////////////////***USER INPUT SETUP***////////////////////////////////////////
@@ -171,6 +174,22 @@ int main(int argc, const char * argv[]) {
             }
         }
         
+
+        if (collisionTest.getGlobalBounds().intersects(ourShip.getShape().getGlobalBounds())) {
+            laserClock.restart();
+            laserVector = {};
+            window.clear(sf::Color::Red);
+//            sf::Text deathText;
+//            deathText.setPosition(sf::VideoMode::getDesktopMode().width/2, sf::VideoMode::getDesktopMode().height/2);
+//            deathText.setFillColor(sf::Color::Black);
+//            deathText.setString("You Crashed! :(");
+//            window.draw(deathText);
+            window.display();
+            while (laserClock.getElapsedTime().asSeconds() < 1) {
+            }
+            ourShip.getShape().setPosition(sf::VideoMode::getDesktopMode().width/2, sf::VideoMode::getDesktopMode().height/2);
+        }
+
         
 ////////////////////////////////////////***DRAWING SHAPES***////////////////////////////////////////
         
@@ -185,6 +204,9 @@ int main(int argc, const char * argv[]) {
                 window.draw(specificLaser.getShape());
             }
         }
+        
+        window.draw(collisionTest);
+        
         
         //every [ ] seconds draw an asteroid from the vector of asteroids
         Asteroid1.draw(window);
