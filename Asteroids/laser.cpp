@@ -22,7 +22,5 @@ Laser::Laser(sf::Vector2f inputLocation, float inputRotation) {
     rotation = inputRotation;
     speed = 16;
     lifetime.restart();
-     
-                        //sf::FloatRect bounds = shape.getGlobalBounds();
     
 }

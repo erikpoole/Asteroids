@@ -38,3 +38,8 @@ void borderCrosser(sf::Shape& input) {
         input.move(0, height * -1);
     }
 }
+
+bool collision(const sf::Shape& shape1, const sf::Shape& shape2) {
+    return (shape1.getGlobalBounds().intersects(shape2.getGlobalBounds()));
+    }
+

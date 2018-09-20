@@ -11,6 +11,7 @@
 #include"catch.hpp"
 
 TEST_CASE("Factorial Tester") {
+    REQUIRE(true);
     /*
           REQUIRE( Factorial(1) == 1 );
           REQUIRE( Factorial(2) == 2 );

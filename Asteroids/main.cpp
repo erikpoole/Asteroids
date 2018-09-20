@@ -5,79 +5,6 @@
 //  Copyright © 2018 Ben Trueman. All rights reserved.
 //  Team: Ben Trueman & Erik Poole
 
-/*
- class Asteroid{
- private:
-    int size;
- 
- public:
-    constructor
-    Destroy/Construct Smaller Asteroids
-    method - Generate Random Asteroids
-    method - Move Asteroids
- 
- }
- 
- class Ship{
-    private:
-    int health
-    ConvexShape shape;
- 
- public:
-    constructor
-    destructor/destroy ship
-    method - Move user input movement (WASD? Mouse?)    - speed?
-    method - rotation
-    method - fire laser
-    method - move across screen border
- 
- }
- 
- 
- class Laser{
- private:
-    int size;
-    int timeofsurivival;
- 
- public:
-    constructor
- 
- }
- 
- 
- class Collisions{
- private:
- 
- public:
-    method - Asteroid/Ship Collision
-    method - Asteroid/Laser Collision
- }
- 
- 
- Order to Implement -
- Ship
- Asteroid
- Collision
- Laser
- 
- Tests -
- Moving ship orthagonally
- Rotating ship
- Moving ship across borders
- 
- Creating and Moving Asteroid automatically
- Test Asteroid Destruction (time delay, no collisions yet)
- 
- Collisions between asteroid and ship
- Collisions between asteroid and asteroid (?)
- 
- Fire Laser from point (shifting direction)
- Fire Laser from front of ship
- Laser appropriately decays over time
- Collision between Laser and asteroid
- 
-*/
-
 #include <iostream>
 #include <SFML/Graphics.hpp>
 #include <SFML/Window.hpp>
@@ -115,6 +42,10 @@ int main(int argc, const char * argv[]) {
     window.setVerticalSyncEnabled(true); // vertical synchronization, call it once, after creating the window
     window.setMouseCursorVisible(false); //hide cursor
     
+    
+////////////////////////////////////////***OBJECTS SETUP***////////////////////////////////////////
+
+    
     //create 20 asteroids - looses reference to the texture
     std::vector<Asteroid> asteroids;
     for(int i = 0; i < 20; i++){
@@ -125,18 +56,13 @@ int main(int argc, const char * argv[]) {
     Asteroid asteroid2(2);
     Asteroid asteroid3(2);
     
-    Ship ourShip = Ship();
-    
-////////////////////////////////////////***OBJECTS SETUP***////////////////////////////////////////
-
+    Ship ourShip;
     ourShip.getShape().move(sf::VideoMode::getDesktopMode().width/2, sf::VideoMode::getDesktopMode().height/2);
     
     std::vector<Laser> laserVector = {};
     sf::Clock laserClock;
 
     sf::Clock clock;
-    
-    sf::CircleShape collisionTest(500);
 
     
 ////////////////////////////////////////***USER INPUT SETUP***////////////////////////////////////////
@@ -169,7 +95,6 @@ int main(int argc, const char * argv[]) {
             ourShip.getRotation(-4);
         }
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) {
-            //ourShip.moveShip();
             moveObject(ourShip.getShape(), ourShip.getRotation(), ourShip.getSpeed());
         }
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) {
@@ -179,21 +104,38 @@ int main(int argc, const char * argv[]) {
             }
         }
         
-
-        if (collisionTest.getGlobalBounds().intersects(ourShip.getShape().getGlobalBounds())) {
-            laserClock.restart();
-            laserVector = {};
-            window.clear(sf::Color::Red);
-//            sf::Text deathText;
-//            deathText.setPosition(sf::VideoMode::getDesktopMode().width/2, sf::VideoMode::getDesktopMode().height/2);
-//            deathText.setFillColor(sf::Color::Black);
-//            deathText.setString("You Crashed! :(");
-//            window.draw(deathText);
-            window.display();
-            while (laserClock.getElapsedTime().asSeconds() < 1) {
+        
+        for (Asteroid& specificAsteroid : asteroids) {
+            if (collision(ourShip.getShape(), specificAsteroid.getShape())) {
+                clock.restart();
+                laserVector = {};
+                window.clear(sf::Color::Red);
+                window.display();
+                while (clock.getElapsedTime().asSeconds() < .5) {
+                }
+                ourShip.getShape().setPosition(sf::VideoMode::getDesktopMode().width/2, sf::VideoMode::getDesktopMode().height/2);
+                ourShip.getHealth()--;
+                if (ourShip.getHealth() <= 0) {
+                    exit(0);
+                }
             }
-            ourShip.getShape().setPosition(sf::VideoMode::getDesktopMode().width/2, sf::VideoMode::getDesktopMode().height/2);
         }
+        
+
+        for(int i = 0; i < asteroids.size(); i++) {
+            for (int j = 0; j < laserVector.size(); j++) {
+                if (collision(asteroids[i].getShape(), laserVector[j].getShape())) {
+                    laserVector.erase(laserVector.begin()+j);
+                    j--;
+                    /*
+                    BEN!!!!!!!
+                     ADD Destructor for asteroids!!!
+                    !!!!!!!!
+                    */
+                }
+            }
+        }
+
 
         
 ////////////////////////////////////////***DRAWING SHAPES***////////////////////////////////////////
@@ -209,8 +151,6 @@ int main(int argc, const char * argv[]) {
                 window.draw(specificLaser.getShape());
             }
         }
-        
-        window.draw(collisionTest);
         
         for (int i = 0; i < 20; i++){
             asteroids[i].draw(window);
@@ -228,6 +168,6 @@ int main(int argc, const char * argv[]) {
         
     }
     
-    
+
 }
 
