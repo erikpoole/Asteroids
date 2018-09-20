@@ -179,7 +179,6 @@ int main(int argc, const char * argv[]) {
                 laserVector.push_back(Laser(ourShip.getShape().getPosition(),ourShip.getRotation()));
             }
         }
-        
 
         if (collisionTest.getGlobalBounds().intersects(ourShip.getShape().getGlobalBounds())) {
             laserClock.restart();
