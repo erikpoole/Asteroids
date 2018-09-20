@@ -212,18 +212,15 @@ int main(int argc, const char * argv[]) {
         
         window.draw(collisionTest);
         
-        
-        //every [ ] seconds draw an asteroid from the vector of asteroids
         for (int i = 0; i < 20; i++){
             asteroids[i].draw(window);
             asteroids[i].update(dtAsSeconds);
-            if (asteroids[i].getLifetime().getElapsedTime().asSeconds() > 3){
-                asteroids[i].Destroy();
-            }
+//            if (asteroids[i].getLifetime().getElapsedTime().asSeconds() > 3){
+//                asteroids[i].Destroy();
+//            }
         }
-        
-        
-        
+        asteroid1.draw(window);
+        asteroid1.update(dtAsSeconds);
         
         ourShip.getShape().getPoint(0);
         
