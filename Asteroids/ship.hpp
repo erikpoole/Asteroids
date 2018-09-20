@@ -25,17 +25,12 @@ public:
     //constructor
     Ship();
     
-        sf::ConvexShape& getShape() {return shape;}
-    
+    sf::ConvexShape& getShape() {return shape;}
     float& getRotation(float change) {return rotation += change;}
     const float& getRotation() {return rotation;}
     
     void moveShip();
-    
-    
-    //destructor/destroy ship
-    
-    
+    //fireLaser();
 };
 
 

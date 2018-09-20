@@ -82,13 +82,18 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/Window.hpp>
 #include <SFML/System.hpp>
+#include <vector>
+#include <math.h>
 
 #include "ship.hpp"
 #include "asteroid.hpp"
 #include "world.hpp"
+#include "laser.hpp"
 
 
 int main(int argc, const char * argv[]) {
+    
+////////////////////////////////////////***WINDOW SETUP***////////////////////////////////////////
     
     // create the window sized to your screen
     sf::ContextSettings settings;
@@ -98,12 +103,10 @@ int main(int argc, const char * argv[]) {
     resolution.x = sf::VideoMode::getDesktopMode().width;
     resolution.y = sf::VideoMode::getDesktopMode().height;
     
-
     sf::Texture backgroundTexture;
     if (!backgroundTexture.loadFromFile("background2.jpg")){
         return -1;
     }
-
     sf::Sprite backgroundSprite;
     backgroundSprite.setTexture(backgroundTexture);
 
@@ -111,52 +114,72 @@ int main(int argc, const char * argv[]) {
     window.setVerticalSyncEnabled(true); // vertical synchronization, call it once, after creating the window
     window.setMouseCursorVisible(false); //hide cursor
     
+    
+    
+////////////////////////////////////////***OBJECTS SETUP***////////////////////////////////////////
+
     Asteroid Asteroid1(50, 1000, 1000);
     Asteroid Asteroid2(150, 500, 500);
     Asteroid Asteroid3(100, 2000, 1000);
 
     Ship ourShip = Ship();
+    std::vector<Laser> laserVector = {};
     ourShip.getShape().move(sf::VideoMode::getDesktopMode().width/2, sf::VideoMode::getDesktopMode().height/2);
     
     sf::Clock clock;
+    
+////////////////////////////////////////***USER INPUT SETUP***////////////////////////////////////////
     
     while (window.isOpen()) {
         sf::Time dt = clock.restart();
         float dtAsSeconds = dt.asSeconds();
         
+        
+        /////USER INPUT SWITCHES/////
         sf::Event event;
         while (window.pollEvent(event)) {
-            
-            /////USER INPUT SWITCHES/////
             if (event.type == sf::Event::Closed) {
                     window.close();
                     break;
             }
         }
-        
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)) {
             window.close();
             break;
+            
         }
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
-            ourShip.getShape().rotate(4);
-            ourShip.getRotation(-4);
-        }
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
             ourShip.getShape().rotate(-4);
             ourShip.getRotation(4);
+        }
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
+            ourShip.getShape().rotate(4);
+            ourShip.getRotation(-4);
         }
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) {
             ourShip.moveShip();
         }
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) {
+            //ourShip.fireLaser();
+            Laser testLaser = Laser(ourShip.getShape().getPosition(),ourShip.getRotation());
+            laserVector.push_back(testLaser);
+        }
         
+        
+////////////////////////////////////////***DRAWING SHAPES***////////////////////////////////////////
         
         window.clear(sf::Color::Black);
         window.draw(backgroundSprite);
 
         window.draw(ourShip.getShape());
-
-       
+        
+        //will clean up
+        for (Laser& specificLaser : laserVector) {
+            float rotation = specificLaser.getRotation();
+            window.draw(specificLaser.getShape());
+            specificLaser.getShape().move(-sin(rotation/57.2958)*15, -cos(rotation/57.2958)*15);
+        }
+        
         //every [ ] seconds draw an asteroid from the vector of asteroids
         Asteroid1.draw(window);
         Asteroid1.update(dtAsSeconds);
@@ -164,9 +187,11 @@ int main(int argc, const char * argv[]) {
         Asteroid2.update(dtAsSeconds);
         Asteroid3.draw(window);
         Asteroid3.update(dtAsSeconds);
-
+        
+        ourShip.getShape().getPoint(0);
         
         window.display();
+        
     }
 }
 
