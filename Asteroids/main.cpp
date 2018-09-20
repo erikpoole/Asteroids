@@ -135,7 +135,6 @@ int main(int argc, const char * argv[]) {
     sf::Clock laserClock;
 
     sf::Clock clock;
-    sf::Time elapsedTime = clock.getElapsedTime();
     
     sf::CircleShape collisionTest(500);
 
