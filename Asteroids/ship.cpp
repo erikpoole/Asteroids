@@ -11,7 +11,11 @@
 #include <SFML/Window.hpp>
 #include <SFML/System.hpp>
 
+#include <math.h>
+#include <iostream>
 
+#include "world.hpp"
+#include "laser.hpp"
 
 Ship::Ship() {
     shape.setPointCount(4);
@@ -20,7 +24,13 @@ Ship::Ship() {
     shape.setPoint(2, sf::Vector2f(0, 40));
     shape.setPoint(3, sf::Vector2f(-40, 80));
     
+                //bounds = shape.getGlobalBounds();
     
     rotation = 0;
-}
+    speed = 8;
+    health = 3;
+    
 
+    
+
+}

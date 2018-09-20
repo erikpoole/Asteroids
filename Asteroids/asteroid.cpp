@@ -21,6 +21,7 @@ Asteroid:: Asteroid(int staringLevel){
                     .time_since_epoch()
                     .count();
     srand(seed);
+    lifetime.restart();
     
     level = staringLevel;
     int randRadius = (level+1)*50; //50,100,150
@@ -74,6 +75,7 @@ void Asteroid::draw(sf::RenderWindow &window)
 
 void Asteroid::Destroy(){
     level--;
+    lifetime.restart();
     asteroid.setRadius((level+1)*50);
     asteroid.setOrigin(asteroid.getRadius(),asteroid.getRadius()); //update origin for new size
     float angle = rand() % 360;

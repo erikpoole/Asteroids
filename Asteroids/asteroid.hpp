@@ -17,12 +17,14 @@ class Asteroid {
 public:
     const float speed[3] = {400.0f, 300.0f, 200.0f};
     const float rotation[3] = {1.5f, 1.0f, 0.5f};
+    sf::Clock lifetime;
 
     Asteroid(int startingLevel);
     
     void update(float dt);
     void draw(sf::RenderWindow &window);
     void Destroy();
+    sf::Clock& getLifetime() {return lifetime;}
     
 private:
     sf::CircleShape asteroid;

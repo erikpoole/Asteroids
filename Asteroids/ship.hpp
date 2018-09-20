@@ -16,21 +16,26 @@
 
 class Ship{
 private:
-    int health;
-    float rotation;
     sf::ConvexShape shape;
-
+                //sf::FloatRect bounds;
     
+    float rotation;
+    float speed;
+    int health;
+
+     
 public:
     //constructor
     Ship();
     
-    float& getRotation (float change) {return rotation += change;}
     sf::ConvexShape& getShape() {return shape;}
+    float& getRotation(float change) {return rotation += change;}
+    const float& getSpeed() {return speed;}
+    const float& getRotation() {return rotation;}
+                    //const sf::FloatRect& getBounds() {return bounds;}
     
-    //destructor/destroy ship
-    
-    
+    void moveShip();
+    //fireLaser();
 };
 
 
