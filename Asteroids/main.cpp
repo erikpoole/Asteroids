@@ -104,7 +104,6 @@ int main(int argc, const char * argv[]) {
             }
         }
         
-        
         for (Asteroid& specificAsteroid : asteroids) {
             if (collision(ourShip.getShape(), specificAsteroid.getShape())) {
                 clock.restart();
@@ -120,7 +119,6 @@ int main(int argc, const char * argv[]) {
                 }
             }
         }
-        
 
         for(int i = 0; i < asteroids.size(); i++) {
             for (int j = 0; j < laserVector.size(); j++) {

@@ -28,15 +28,22 @@ Asteroid:: Asteroid(int staringLevel){
     level = staringLevel;
     int randRadius = (level+1)*50; //50,100,150
     asteroid.setRadius(randRadius);
-    int randBorder = rand() % 2;
     
     int windowWidth = sf::VideoMode::getDesktopMode().width;
     int windowHeight = sf::VideoMode::getDesktopMode().height;
     
-    int randXPosition = randBorder * (rand() % windowWidth);
-    int randYPosition = randBorder * (rand() % windowHeight);
-
-    asteroid.setPosition(randXPosition, randYPosition); //0 or width, 0 or height
+    //logic to make asteroids spawn on borders
+    int xPosition[] = {0, 1, windowWidth};
+    int random = rand()%3;
+    
+    if(xPosition[random] == 0 || xPosition[random] == windowWidth){
+        asteroid.setPosition(xPosition[random],(rand() % windowHeight));
+    } else {
+        int yPosition[] = {0, windowHeight};
+        int random = rand()%2;
+        asteroid.setPosition((rand() % windowWidth), yPosition[random]);
+     }
+    
     asteroid.setOrigin(asteroid.getRadius(),asteroid.getRadius()); //make circle rotate around its center
     
     //load texture
@@ -48,6 +55,10 @@ Asteroid:: Asteroid(int staringLevel){
 
     int angle = rand() % 360;
     direction = sf::Vector2f(cos(angle * DEG2RAD), sin(angle * DEG2RAD));
+    
+    float rotationDirection[4] = {-1.0, -0.5, 0.5, 1.0};
+    int index = rand()%4;
+    asteroidRotation = rotationDirection[index]; //random initial rotation value
     
     
 }
@@ -82,11 +93,11 @@ void Asteroid::update(float elapsedTime){
     
     sf::Vector2f distance = direction * speed[level] * elapsedTime;
     asteroid.move(distance);
+    asteroid.rotate(asteroidRotation + rotation[level]);
 }
 ///draws the asteroid shape in the window, rotates asteroid based off of asteroid level
 void Asteroid::draw(sf::RenderWindow &window)
 {
-    asteroid.rotate(rotation[level]);
     window.draw(asteroid);
 }
 
@@ -98,5 +109,8 @@ void Asteroid::Destroy(){
     asteroid.setOrigin(asteroid.getRadius(),asteroid.getRadius()); //update origin for new size
     float angle = rand() % 360;
     direction = sf::Vector2f(cos(angle * DEG2RAD), sin(angle * DEG2RAD));
+    
+    //TODO: create second asteroid with opposite direction. Add it to the class vector of asteroids.
+    //Asteroid child(level);
     
 }
