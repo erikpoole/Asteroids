@@ -15,18 +15,20 @@
 
 class Asteroid {
 public:
-    //constructor
-    Asteroid(int radius, int x, int y);
+    const float speed[3] = {400.0f, 300.0f, 200.0f};
+    const float rotation[3] = {1.5f, 1.0f, 0.5f};
+
+    Asteroid(int startingLevel);
     
-    // dt, change in time
     void update(float dt);
     void draw(sf::RenderWindow &window);
+    void Destroy();
     
 private:
     sf::CircleShape asteroid;
     sf::Texture asteroidTexture;
-    sf::Vector2f position;
-
+    sf::Vector2f direction;
+    int level;
 };
 
 #endif /* asteroid_hpp */

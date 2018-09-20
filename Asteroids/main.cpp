@@ -84,6 +84,7 @@
 #include <SFML/System.hpp>
 #include "ship.hpp"
 #include "asteroid.hpp"
+#include <vector>
 
 int main(int argc, const char * argv[]) {
     
@@ -108,14 +109,21 @@ int main(int argc, const char * argv[]) {
     window.setVerticalSyncEnabled(true); // vertical synchronization, call it once, after creating the window
     window.setMouseCursorVisible(false); //hide cursor
     
-    Asteroid Asteroid1(50, 1000, 1000);
-    Asteroid Asteroid2(150, 500, 500);
-    Asteroid Asteroid3(100, 2000, 1000);
-
+    //create 20 asteroids - looses reference to the texture
+    std::vector<Asteroid> asteroids;
+    for(int i = 0; i < 20; i++){
+        Asteroid asteroid(2);
+        asteroids.emplace_back(asteroid);
+    }
+    Asteroid asteroid1(2);
+    Asteroid asteroid2(2);
+    Asteroid asteroid3(2);
+    
     Ship ourShip = Ship();
     ourShip.getShape().move(sf::VideoMode::getDesktopMode().width/2, sf::VideoMode::getDesktopMode().height/2);
     
     sf::Clock clock;
+    sf::Time elapsedTime = clock.getElapsedTime();
     
     while (window.isOpen()) {
         sf::Time dt = clock.restart();
@@ -156,15 +164,19 @@ int main(int argc, const char * argv[]) {
         window.draw(ourShip.getShape());
        
         //every [ ] seconds draw an asteroid from the vector of asteroids
-        Asteroid1.draw(window);
-        Asteroid1.update(dtAsSeconds);
-        Asteroid2.draw(window);
-        Asteroid2.update(dtAsSeconds);
-        Asteroid3.draw(window);
-        Asteroid3.update(dtAsSeconds);
-
+//        for(Asteroid item: asteroids){
+//            item.draw(window);
+//            item.update(dtAsSeconds);
+//        }
+        for (int i = 0; i < 20; i++){
+            asteroids[i].draw(window);
+            asteroids[i].update(dtAsSeconds);
+        }
+        
         
         window.display();
     }
+    
+    
 }
 
