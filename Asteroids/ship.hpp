@@ -41,11 +41,7 @@ public:
     /// returns present rotation
     const float& getRotation() {return rotation;}
     
-    
-    
-                    //const sf::FloatRect& getBounds() {return bounds;}
-    
-    
+    int& getHealth() {return health;}
     
     
     
