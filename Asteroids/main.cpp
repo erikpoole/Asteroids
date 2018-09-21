@@ -93,7 +93,7 @@ int main(int argc, const char * argv[]) {
             moveObject(ourShip.getShape(), ourShip.getRotation(), ourShip.getSpeed());
         }
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) {
-            if (laserClock.getElapsedTime().asSeconds() > .4) {
+            if (laserClock.getElapsedTime().asSeconds() > .25) {
                 laserClock.restart();
                 laserVector.push_back(Laser(ourShip.getShape().getPosition(),ourShip.getRotation()));
             }
@@ -105,6 +105,11 @@ int main(int argc, const char * argv[]) {
                 laserVector = {};
                 window.clear(sf::Color::Red);
                 window.display();
+                
+                for(int i = 0; i < asteroids.size(); i++){
+                    asteroids[i].resetPosition();
+                }
+                
                 while (clock.getElapsedTime().asSeconds() < .5) {
                 }
                 ourShip.getShape().setPosition(sf::VideoMode::getDesktopMode().width/2, sf::VideoMode::getDesktopMode().height/2);
@@ -119,8 +124,10 @@ int main(int argc, const char * argv[]) {
             for (int j = 0; j < laserVector.size(); j++) {
                 if (collision(laserVector[j].getShape(), asteroids[i].getShape())) {
                     laserVector.erase(laserVector.begin()+j);
-                    //asteroids.erase(asteroids.begin()+i); //error: Object of type 'Asteroid' cannot be assigned because its copy assignment operator is implicitly deleted
-                    asteroids.push_back(asteroids[i].Destroy()); //this works!
+                    if(asteroids[i].getLevel() == 0){
+                        asteroids.erase(asteroids.begin()+i);
+                    } else asteroids.push_back(asteroids[i].Destroy()); //this works!
+                    
                     j--;
                 } else {
                     if (laserVector[j].getLifetime().getElapsedTime().asSeconds() > 1.5) {
@@ -128,11 +135,8 @@ int main(int argc, const char * argv[]) {
                     }
                 }
             }
-//            if(asteroids[i].getLevel() < 0){
-//                asteroids.erase(asteroids.begin()+i);
-//            }
+           
         }
-
 
 ////////////////////////////////////////***DRAWING SHAPES***////////////////////////////////////////
         
@@ -149,9 +153,6 @@ int main(int argc, const char * argv[]) {
         for (int i = 0; i < asteroids.size(); i++){
             asteroids[i].draw(window);
             asteroids[i].update(dtAsSeconds);
-//            if (asteroids[i].getLifetime().getElapsedTime().asSeconds() > 3){
-//                asteroids[i].Destroy();
-//            }
         }
         
         window.display();

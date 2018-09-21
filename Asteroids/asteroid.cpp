@@ -17,18 +17,7 @@
 #include "world.hpp"
 #define DEG2RAD 3.14159f / 180.0f
 
-///Asteroid constructor. Randomly assigns the asteroid a position, sets the origin as the center of the asteroid, loads the texture jpg, and randomly assigns a direction for the asteroid to move
-Asteroid::Asteroid(int staringLevel){
-    unsigned seed = std::chrono::system_clock::now()
-                    .time_since_epoch()
-                    .count();
-    srand(seed);
-    lifetime.restart();
-    level = staringLevel;
-    
-    int randRadius = (level+1)*50; //50,100,150
-    asteroid.setRadius(randRadius);
-    
+void Asteroid::resetPosition() {
     int windowWidth = sf::VideoMode::getDesktopMode().width;
     int windowHeight = sf::VideoMode::getDesktopMode().height;
     
@@ -42,7 +31,22 @@ Asteroid::Asteroid(int staringLevel){
         int yPosition[] = {0, windowHeight};
         int random = rand()%2;
         asteroid.setPosition((rand() % windowWidth), yPosition[random]);
-     }
+    }
+}
+
+///Asteroid constructor. Randomly assigns the asteroid a position, sets the origin as the center of the asteroid, loads the texture jpg, and randomly assigns a direction for the asteroid to move
+Asteroid::Asteroid(int staringLevel){
+    unsigned seed = std::chrono::system_clock::now()
+                    .time_since_epoch()
+                    .count();
+    srand(seed);
+    lifetime.restart();
+    level = staringLevel;
+    
+    int randRadius = (level+1)*50; //50,100,150
+    asteroid.setRadius(randRadius);
+    
+    resetPosition();
     
     asteroid.setOrigin(asteroid.getRadius(),asteroid.getRadius()); //make circle rotate around its center
     
