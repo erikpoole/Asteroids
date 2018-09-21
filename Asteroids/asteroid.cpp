@@ -18,14 +18,14 @@
 #define DEG2RAD 3.14159f / 180.0f
 
 ///Asteroid constructor. Randomly assigns the asteroid a position, sets the origin as the center of the asteroid, loads the texture jpg, and randomly assigns a direction for the asteroid to move
-Asteroid:: Asteroid(int staringLevel){
+Asteroid::Asteroid(int staringLevel){
     unsigned seed = std::chrono::system_clock::now()
                     .time_since_epoch()
                     .count();
     srand(seed);
     lifetime.restart();
-    
     level = staringLevel;
+    
     int randRadius = (level+1)*50; //50,100,150
     asteroid.setRadius(randRadius);
     
@@ -50,32 +50,20 @@ Asteroid:: Asteroid(int staringLevel){
     if (!asteroidTexture.loadFromFile("asteroid.jpg")) {
         std::cout << "ERROR asteroid.jpg" << std::endl;
     }
-    asteroid.setTexture(&asteroidTexture);
-    asteroid.setTextureRect(sf::IntRect(0, 0, 512, 512));
-
+   
+    
+    //set random direction
     int angle = rand() % 360;
     direction = sf::Vector2f(cos(angle * DEG2RAD), sin(angle * DEG2RAD));
     
+    //set random rotation
     float rotationDirection[4] = {-1.0, -0.5, 0.5, 1.0};
-    int index = rand()%4;
-    asteroidRotation = rotationDirection[index]; //random initial rotation value
-    
-    
+    int index = rand() % 4;
+    asteroidRotation = rotationDirection[index];
 }
-///updates asteroid position, checks asteroid position and moves asteroid to the other side of the screen if it moves offscreen
+///updates asteroid position, checks asteroid position and moves asteroid to the other side of the screen if it moves offscreen, rotates asteroid based off of asteroid level + asteroidRotation
 void Asteroid::update(float elapsedTime){
     
-//    if (asteroid.getPosition().x < -20.0f){
-//        asteroid.setPosition(sf::VideoMode::getDesktopMode().width,0);
-//    } else if (asteroid.getPosition().x > sf::VideoMode::getDesktopMode().width){
-//        asteroid.setPosition(0, asteroid.getPosition().y);
-//    }
-//    if (asteroid.getPosition().y < -20.0f){
-//        asteroid.setPosition(asteroid.getPosition().x,sf::VideoMode::getDesktopMode().height);
-//    } else if (asteroid.getPosition().y > sf::VideoMode::getDesktopMode().height){
-//        asteroid.setPosition(asteroid.getPosition().x,0.0);
-//    }
-  
     if (asteroid.getPosition().x < 0 - asteroid.getRadius()) {
         asteroid.move(sf::VideoMode::getDesktopMode().width + asteroid.getRadius(), 0);
     }
@@ -95,9 +83,11 @@ void Asteroid::update(float elapsedTime){
     asteroid.move(distance);
     asteroid.rotate(asteroidRotation + rotation[level]);
 }
-///draws the asteroid shape in the window, rotates asteroid based off of asteroid level
+///draws the asteroid shape in the window
 void Asteroid::draw(sf::RenderWindow &window)
 {
+    asteroid.setTexture(&asteroidTexture);
+    asteroid.setTextureRect(sf::IntRect(0, 0, 512, 512));
     window.draw(asteroid);
 }
 
@@ -110,7 +100,30 @@ void Asteroid::Destroy(){
     float angle = rand() % 360;
     direction = sf::Vector2f(cos(angle * DEG2RAD), sin(angle * DEG2RAD));
     
-    //TODO: create second asteroid with opposite direction. Add it to the class vector of asteroids.
-    //Asteroid child(level);
+    //return a copy of the asteroid
     
+    //TODO: create second asteroid with opposite direction. Add it to the class vector of asteroids.
+    //return Asteroid child(level). Make this return an asteroid instead of void
 }
+
+//fill vector with number of level 2 asteroids
+std::vector<Asteroid> makeAsteroids(int number){
+    std::vector<Asteroid> asteroids;
+    for(int i = 0; i < number; i++){
+        Asteroid asteroid(2);
+        asteroids.push_back(asteroid);
+    }
+    return asteroids;
+}
+
+//draw all asteroids in vector
+void drawAsteroids(std::vector<Asteroid> asteroids, sf::RenderWindow &window, float elapsedTime){
+    for (int i = 0; i < asteroids.size(); i++){
+        asteroids[i].draw(window);
+        asteroids[i].update(elapsedTime);
+    }
+}
+
+//destroy asteroid i in the vector
+
+

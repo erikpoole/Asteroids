@@ -5,92 +5,17 @@
 //  Copyright © 2018 Ben Trueman. All rights reserved.
 //  Team: Ben Trueman & Erik Poole
 
-/*
- class Asteroid{
- private:
-    int size;
- 
- public:
-    constructor
-    Destroy/Construct Smaller Asteroids
-    method - Generate Random Asteroids
-    method - Move Asteroids
- 
- }
- 
- class Ship{
-    private:
-    int health
-    ConvexShape shape;
- 
- public:
-    constructor
-    destructor/destroy ship
-    method - Move user input movement (WASD? Mouse?)    - speed?
-    method - rotation
-    method - fire laser
-    method - move across screen border
- 
- }
- 
- 
- class Laser{
- private:
-    int size;
-    int timeofsurivival;
- 
- public:
-    constructor
- 
- }
- 
- 
- class Collisions{
- private:
- 
- public:
-    method - Asteroid/Ship Collision
-    method - Asteroid/Laser Collision
- }
- 
- 
- Order to Implement -
- Ship
- Asteroid
- Collision
- Laser
- 
- Tests -
- Moving ship orthagonally
- Rotating ship
- Moving ship across borders
- 
- Creating and Moving Asteroid automatically
- Test Asteroid Destruction (time delay, no collisions yet)
- 
- Collisions between asteroid and ship
- Collisions between asteroid and asteroid (?)
- 
- Fire Laser from point (shifting direction)
- Fire Laser from front of ship
- Laser appropriately decays over time
- Collision between Laser and asteroid
- 
-*/
-
 #include <iostream>
 #include <SFML/Graphics.hpp>
 #include <SFML/Window.hpp>
 #include <SFML/System.hpp>
 #include <vector>
 #include <math.h>
-
+#include <vector>
 #include "ship.hpp"
 #include "asteroid.hpp"
-#include <vector>
 #include "world.hpp"
 #include "laser.hpp"
-
 
 int main(int argc, const char * argv[]) {
     
@@ -114,16 +39,9 @@ int main(int argc, const char * argv[]) {
     sf::RenderWindow window(sf::VideoMode(resolution.x, resolution.y), "Asteroids", sf::Style::Fullscreen, settings);
     window.setVerticalSyncEnabled(true); // vertical synchronization, call it once, after creating the window
     window.setMouseCursorVisible(false); //hide cursor
-    
-    //create 20 asteroids - looses reference to the texture
-    std::vector<Asteroid> asteroids;
-    for(int i = 0; i < 20; i++){
-        Asteroid asteroid(2);
-        asteroids.emplace_back(asteroid);
-    }
-    Asteroid asteroid1(2);
-    Asteroid asteroid2(2);
-    Asteroid asteroid3(2);
+
+    //make 20 asteroids
+    std::vector<Asteroid> asteroids = makeAsteroids(20);
     
     Ship ourShip = Ship();
     
@@ -135,17 +53,14 @@ int main(int argc, const char * argv[]) {
     sf::Clock laserClock;
 
     sf::Clock clock;
-    sf::Time elapsedTime = clock.getElapsedTime();
     
     sf::CircleShape collisionTest(500);
-
     
 ////////////////////////////////////////***USER INPUT SETUP***////////////////////////////////////////
     
     while (window.isOpen()) {
         sf::Time dt = clock.restart();
         float dtAsSeconds = dt.asSeconds();
-        
         
         /////USER INPUT SWITCHES/////
         sf::Event event;
@@ -154,7 +69,6 @@ int main(int argc, const char * argv[]) {
                     window.close();
                     break;
             }
-            
         }
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)) {
             window.close();
@@ -195,7 +109,6 @@ int main(int argc, const char * argv[]) {
             ourShip.getShape().setPosition(sf::VideoMode::getDesktopMode().width/2, sf::VideoMode::getDesktopMode().height/2);
         }
 
-        
 ////////////////////////////////////////***DRAWING SHAPES***////////////////////////////////////////
         
         window.clear(sf::Color::Black);
@@ -212,22 +125,17 @@ int main(int argc, const char * argv[]) {
         
         window.draw(collisionTest);
         
-        for (int i = 0; i < 20; i++){
+        for (int i = 0; i < asteroids.size(); i++){
             asteroids[i].draw(window);
             asteroids[i].update(dtAsSeconds);
 //            if (asteroids[i].getLifetime().getElapsedTime().asSeconds() > 3){
 //                asteroids[i].Destroy();
-//            }
-        }
-        asteroid1.draw(window);
-        asteroid1.update(dtAsSeconds);
+            }
         
         ourShip.getShape().getPoint(0);
-        
+
         window.display();
         
     }
-    
-    
 }
 
