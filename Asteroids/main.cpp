@@ -43,8 +43,8 @@ int main(int argc, const char * argv[]) {
     
     //create 20 asteroids - looses reference to the texture
     std::vector<Asteroid> asteroids;
-    for(int i = 0; i < 10; i++){
-        Asteroid asteroid(2);
+    for(int i = 0; i < 3; i++){
+        Asteroid asteroid(10);
         asteroids.push_back(asteroid);
     }
 
@@ -61,8 +61,6 @@ int main(int argc, const char * argv[]) {
     sf::Clock laserClock;
 
     sf::Clock clock;
-    
-    sf::CircleShape collisionTest(500);
     
 ////////////////////////////////////////***USER INPUT SETUP***////////////////////////////////////////
     
@@ -124,7 +122,10 @@ int main(int argc, const char * argv[]) {
                     //asteroids.erase(asteroids.begin()+i); //error: Object of type 'Asteroid' cannot be assigned because its copy assignment operator is implicitly deleted
                     asteroids.push_back(asteroids[i].Destroy()); //this works!
                     j--;
-                   
+                } else {
+                    if (laserVector[j].getLifetime().getElapsedTime().asSeconds() > 1.5) {
+                        laserVector.erase(laserVector.begin()+j);
+                    }
                 }
             }
 //            if(asteroids[i].getLevel() < 0){
@@ -141,13 +142,9 @@ int main(int argc, const char * argv[]) {
         window.draw(ourShip.getShape());
         
         for (Laser& specificLaser : laserVector) {
-            if (specificLaser.getLifetime().getElapsedTime().asSeconds() < 1.5) {
                 moveObject(specificLaser.getShape(), specificLaser.getRotation(), specificLaser.getSpeed());
                 window.draw(specificLaser.getShape());
-            }
         }
-        
-        window.draw(collisionTest);
         
         for (int i = 0; i < asteroids.size(); i++){
             asteroids[i].draw(window);
