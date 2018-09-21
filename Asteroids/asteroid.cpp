@@ -87,12 +87,12 @@ void Asteroid::update(float elapsedTime){
 void Asteroid::draw(sf::RenderWindow &window)
 {
     asteroid.setTexture(&asteroidTexture);
-    asteroid.setTextureRect(sf::IntRect(0, 0, 512, 512));
+    asteroid.setTextureRect(sf::IntRect(0, 0, 398, 398));
     window.draw(asteroid);
 }
 
 ///downgrades the asteroid level, resets the radius and origin, and generates a new random direction
-void Asteroid::Destroy(){
+Asteroid Asteroid::Destroy(){
     level--;
     lifetime.restart();
     asteroid.setRadius((level+1)*50);
@@ -100,9 +100,10 @@ void Asteroid::Destroy(){
     float angle = rand() % 360;
     direction = sf::Vector2f(cos(angle * DEG2RAD), sin(angle * DEG2RAD));
     
-    //return a copy of the asteroid
-    
     //return Asteroid child(level). Make this return an asteroid instead of void
+    Asteroid childAsteroid(level);
+    childAsteroid.asteroid.setPosition(asteroid.getPosition());
+    return childAsteroid;
 }
 
 //fill vector with number of level 2 asteroids

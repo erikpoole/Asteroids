@@ -43,7 +43,7 @@ int main(int argc, const char * argv[]) {
     
     //create 20 asteroids - looses reference to the texture
     std::vector<Asteroid> asteroids;
-    for(int i = 0; i < 20; i++){
+    for(int i = 0; i < 10; i++){
         Asteroid asteroid(2);
         asteroids.push_back(asteroid);
     }
@@ -125,7 +125,7 @@ int main(int argc, const char * argv[]) {
                 if (collision(laserVector[j].getShape(), asteroids[i].getShape())) {
                     laserVector.erase(laserVector.begin()+j);
                     //asteroids.erase(asteroids.begin()+i); //error: Object of type 'Asteroid' cannot be assigned because its copy assignment operator is implicitly deleted
-                    asteroids[i].Destroy(); //this works!
+                    asteroids.push_back(asteroids[i].Destroy()); //this works!
                     j--;
                    
                 }

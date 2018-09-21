@@ -33,7 +33,7 @@ public:
     ///draws asteroid in the window
     void draw(sf::RenderWindow &window);
     ///downgrades the asteroid to a smaller asteroid, to be used in collisions with lasers
-    void Destroy();
+    Asteroid Destroy();
     ///returns how long the asteroid has been in existance for
     sf::Clock& getLifetime() {return lifetime;}
     sf::CircleShape& getShape() {return asteroid;}
