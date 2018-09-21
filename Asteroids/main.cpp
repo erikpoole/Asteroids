@@ -11,13 +11,11 @@
 #include <SFML/System.hpp>
 #include <vector>
 #include <math.h>
-
+#include <vector>
 #include "ship.hpp"
 #include "asteroid.hpp"
-#include <vector>
 #include "world.hpp"
 #include "laser.hpp"
-
 
 int main(int argc, const char * argv[]) {
     
@@ -41,9 +39,6 @@ int main(int argc, const char * argv[]) {
     sf::RenderWindow window(sf::VideoMode(resolution.x, resolution.y), "Asteroids", sf::Style::Fullscreen, settings);
     window.setVerticalSyncEnabled(true); // vertical synchronization, call it once, after creating the window
     window.setMouseCursorVisible(false); //hide cursor
-    
-    
-////////////////////////////////////////***OBJECTS SETUP***////////////////////////////////////////
 
     
     //create 20 asteroids - looses reference to the texture
@@ -52,9 +47,15 @@ int main(int argc, const char * argv[]) {
         Asteroid asteroid(2);
         asteroids.push_back(asteroid);
     }
-    Asteroid asteroid1(2);
-    Asteroid asteroid2(2);
-    Asteroid asteroid3(2);
+//    Asteroid asteroid1(2);
+//    Asteroid asteroid2(2);
+//    Asteroid asteroid3(2);
+//
+//    //make 20 asteroids
+//    std::vector<Asteroid> asteroids = makeAsteroids(20);
+    
+    
+////////////////////////////////////////***OBJECTS SETUP***////////////////////////////////////////
     
     Ship ourShip;
     ourShip.getShape().move(sf::VideoMode::getDesktopMode().width/2, sf::VideoMode::getDesktopMode().height/2);
@@ -63,14 +64,14 @@ int main(int argc, const char * argv[]) {
     sf::Clock laserClock;
 
     sf::Clock clock;
-
+    
+    sf::CircleShape collisionTest(500);
     
 ////////////////////////////////////////***USER INPUT SETUP***////////////////////////////////////////
     
     while (window.isOpen()) {
         sf::Time dt = clock.restart();
         float dtAsSeconds = dt.asSeconds();
-        
         
         /////USER INPUT SWITCHES/////
         sf::Event event;
@@ -79,7 +80,6 @@ int main(int argc, const char * argv[]) {
                     window.close();
                     break;
             }
-            
         }
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)) {
             window.close();
@@ -132,7 +132,6 @@ int main(int argc, const char * argv[]) {
         }
 
 
-        
 ////////////////////////////////////////***DRAWING SHAPES***////////////////////////////////////////
         
         window.clear(sf::Color::Black);
@@ -147,20 +146,17 @@ int main(int argc, const char * argv[]) {
             }
         }
         
-        for (int i = 0; i < 20; i++){
+        window.draw(collisionTest);
+        
+        for (int i = 0; i < asteroids.size(); i++){
             asteroids[i].draw(window);
             asteroids[i].update(dtAsSeconds);
 //            if (asteroids[i].getLifetime().getElapsedTime().asSeconds() > 3){
 //                asteroids[i].Destroy();
-//            }
-        }
-        asteroid1.draw(window);
-        asteroid1.update(dtAsSeconds);
+            }
         
         window.display();
         
     }
-    
-
 }
 

@@ -12,10 +12,13 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/Window.hpp>
 #include <SFML/System.hpp>
+#include <vector>
 
 ///The Asteroid class. Deals with all events related to asteroid creation, lifetime, and destruction.
 class Asteroid {
 public:
+    std::vector<Asteroid> asteroids;
+
     ///speeds for each level of asteroid (largest asteroid is level 2)
     const float speed[3] = {550.0f, 300.0f, 200.0f};
     ///rotation speeds for each level of asteroid (largest asteroid is level 2)
@@ -47,5 +50,11 @@ private:
     int level;
     float asteroidRotation;
 };
+
+//fill vector with number of asteroids
+std::vector<Asteroid> makeAsteroids(int number);
+
+//draw all asteroids in vector
+void drawAsteroids(std::vector<Asteroid> asteroids, sf::RenderWindow &window, float elapsedTime);
 
 #endif /* asteroid_hpp */
