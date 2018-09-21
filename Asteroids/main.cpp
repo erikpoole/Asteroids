@@ -43,7 +43,7 @@ int main(int argc, const char * argv[]) {
     
     //create 20 asteroids - looses reference to the texture
     std::vector<Asteroid> asteroids;
-    for(int i = 0; i < 1; i++){
+    for(int i = 0; i < 10; i++){
         Asteroid asteroid(2);
         asteroids.push_back(asteroid);
     }
@@ -95,7 +95,7 @@ int main(int argc, const char * argv[]) {
             moveObject(ourShip.getShape(), ourShip.getRotation(), ourShip.getSpeed());
         }
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) {
-            if (laserClock.getElapsedTime().asSeconds() > .4) {
+            if (laserClock.getElapsedTime().asSeconds() > .25) {
                 laserClock.restart();
                 laserVector.push_back(Laser(ourShip.getShape().getPosition(),ourShip.getRotation()));
             }
@@ -107,6 +107,11 @@ int main(int argc, const char * argv[]) {
                 laserVector = {};
                 window.clear(sf::Color::Red);
                 window.display();
+                
+                for(int i = 0; i < asteroids.size(); i++){
+                    asteroids[i].resetPosition();
+                }
+                
                 while (clock.getElapsedTime().asSeconds() < .5) {
                 }
                 ourShip.getShape().setPosition(sf::VideoMode::getDesktopMode().width/2, sf::VideoMode::getDesktopMode().height/2);
@@ -132,7 +137,6 @@ int main(int argc, const char * argv[]) {
            
         }
 
-
 ////////////////////////////////////////***DRAWING SHAPES***////////////////////////////////////////
         
         window.clear(sf::Color::Black);
@@ -152,9 +156,6 @@ int main(int argc, const char * argv[]) {
         for (int i = 0; i < asteroids.size(); i++){
             asteroids[i].draw(window);
             asteroids[i].update(dtAsSeconds);
-//            if (asteroids[i].getLifetime().getElapsedTime().asSeconds() > 3){
-//                asteroids[i].Destroy();
-//            }
         }
         
         window.display();

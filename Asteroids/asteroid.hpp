@@ -26,6 +26,10 @@ public:
     ///tracks life of asteroid
     sf::Clock lifetime;
     
+    void extracted();
+    
+    //sets asteroid position to the screen borders
+    void resetPosition();
     ///asteroid constructor
     Asteroid(int startingLevel);
     ///updates asteroid movement
