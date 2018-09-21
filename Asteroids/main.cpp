@@ -113,11 +113,8 @@ int main(int argc, const char * argv[]) {
                 if (collision(asteroids[i].getShape(), laserVector[j].getShape())) {
                     laserVector.erase(laserVector.begin()+j);
                     j--;
-                    /*
-                    BEN!!!!!!!
-                     ADD Destructor for asteroids!!!
-                    !!!!!!!!
-                    */
+                    // asteroids[j].Destroy(); //ERROR: Thread 1: EXC_BAD_ACCESS (code=1, address=0x18)
+                    // asteroids.erase(asteroids.begin()+j); //error: Object of type 'Asteroid' cannot be assigned because its copy assignment operator is implicitly deleted
                 }
             }
         }
@@ -144,7 +141,8 @@ int main(int argc, const char * argv[]) {
             asteroids[i].update(dtAsSeconds);
 //            if (asteroids[i].getLifetime().getElapsedTime().asSeconds() > 3){
 //                asteroids[i].Destroy();
-            }
+//            }
+        }
         
         ourShip.getShape().getPoint(0);
 

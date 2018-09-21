@@ -36,7 +36,6 @@ public:
     void Destroy();
     ///returns how long the asteroid has been in existance for
     sf::Clock& getLifetime() {return lifetime;}
-    
     sf::Shape& getShape() {return asteroid;}
     
 private:

@@ -102,7 +102,6 @@ void Asteroid::Destroy(){
     
     //return a copy of the asteroid
     
-    //TODO: create second asteroid with opposite direction. Add it to the class vector of asteroids.
     //return Asteroid child(level). Make this return an asteroid instead of void
 }
 
