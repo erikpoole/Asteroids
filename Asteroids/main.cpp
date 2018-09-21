@@ -43,8 +43,8 @@ int main(int argc, const char * argv[]) {
     
     //create 20 asteroids - looses reference to the texture
     std::vector<Asteroid> asteroids;
-    for(int i = 0; i < 3; i++){
-        Asteroid asteroid(10);
+    for(int i = 0; i < 10; i++){
+        Asteroid asteroid(2);
         asteroids.push_back(asteroid);
     }
 

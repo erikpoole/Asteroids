@@ -19,6 +19,7 @@ Laser::Laser(sf::Vector2f inputLocation, float inputRotation) {
     shape.setSize(sf::Vector2f(5,-50));
     shape.setPosition(inputLocation);
     shape.setRotation(-inputRotation);
+    shape.setFillColor(sf::Color::Green);
     rotation = inputRotation;
     speed = 16;
     lifetime.restart();
