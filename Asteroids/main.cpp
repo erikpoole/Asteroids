@@ -50,7 +50,7 @@ int main(int argc, const char * argv[]) {
     std::vector<Asteroid> asteroids;
     for(int i = 0; i < 20; i++){
         Asteroid asteroid(2);
-        asteroids.emplace_back(asteroid);
+        asteroids.push_back(asteroid);
     }
     Asteroid asteroid1(2);
     Asteroid asteroid2(2);
@@ -122,14 +122,11 @@ int main(int argc, const char * argv[]) {
 
         for(int i = 0; i < asteroids.size(); i++) {
             for (int j = 0; j < laserVector.size(); j++) {
-                if (collision(asteroids[i].getShape(), laserVector[j].getShape())) {
+                if (collision(laserVector[j].getShape(), asteroids[i].getShape())) {
                     laserVector.erase(laserVector.begin()+j);
                     j--;
-                    /*
-                    BEN!!!!!!!
-                     ADD Destructor for asteroids!!!
-                    !!!!!!!!
-                    */
+                    asteroids[i].Destroy();
+                    //asteroids.erase(asteroids.begin()+i);
                 }
             }
         }
@@ -159,8 +156,6 @@ int main(int argc, const char * argv[]) {
         }
         asteroid1.draw(window);
         asteroid1.update(dtAsSeconds);
-        
-        ourShip.getShape().getPoint(0);
         
         window.display();
         
