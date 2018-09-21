@@ -47,10 +47,7 @@ int main(int argc, const char * argv[]) {
         Asteroid asteroid(2);
         asteroids.push_back(asteroid);
     }
-//    Asteroid asteroid1(2);
-//    Asteroid asteroid2(2);
-//    Asteroid asteroid3(2);
-//
+
 //    //make 20 asteroids
 //    std::vector<Asteroid> asteroids = makeAsteroids(20);
     
@@ -130,6 +127,9 @@ int main(int argc, const char * argv[]) {
                    
                 }
             }
+//            if(asteroids[i].getLevel() < 0){
+//                asteroids.erase(asteroids.begin()+i);
+//            }
         }
 
 

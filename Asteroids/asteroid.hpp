@@ -37,6 +37,7 @@ public:
     ///returns how long the asteroid has been in existance for
     sf::Clock& getLifetime() {return lifetime;}
     sf::CircleShape& getShape() {return asteroid;}
+    int getLevel();
     
 private:
     ///the asteroid shape

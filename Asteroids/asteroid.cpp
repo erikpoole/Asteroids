@@ -124,6 +124,7 @@ void drawAsteroids(std::vector<Asteroid> asteroids, sf::RenderWindow &window, fl
     }
 }
 
-//destroy asteroid i in the vector
-
+int Asteroid::getLevel(){
+    return level;
+}
 
