@@ -20,9 +20,9 @@ public:
     std::vector<Asteroid> asteroids;
 
     ///speeds for each level of asteroid (largest asteroid is level 2)
-    const float speed[3] = {550.0f, 300.0f, 200.0f};
+    float speed[3] = {550.0f, 300.0f, 200.0f};
     ///rotation speeds for each level of asteroid (largest asteroid is level 2)
-    const float rotation[3] = {0.75f, 0.5f, 0.25f};
+    float rotation[3] = {0.75f, 0.5f, 0.25f};
     ///tracks life of asteroid
     sf::Clock lifetime;
     
