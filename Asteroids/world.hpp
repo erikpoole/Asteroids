@@ -19,6 +19,6 @@ void moveObject(sf::Shape& input, float angle, float speed);
 
 void borderCrosser(sf::Shape& input);
 
-bool collision(const sf::Shape& shape1, const sf::Shape& shape2);
+bool collision(sf::Shape& shape, const sf::CircleShape& asteroid);
 
 #endif /* world_hpp */

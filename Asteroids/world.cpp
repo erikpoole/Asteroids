@@ -11,8 +11,7 @@
 #include <SFML/Window.hpp>
 #include <SFML/System.hpp>
 #include <math.h>
-
-
+#include <iostream>
 
 
 //57.2958 is approximate conversion from degrees to radians
@@ -20,7 +19,6 @@ void moveObject(sf::Shape& object, float angle, float speed) {
     object.move(-sin(angle/57.2958)*speed, -cos(angle/57.2958)*speed);
     borderCrosser(object);
 }
-
 
 void borderCrosser(sf::Shape& input) {
     if (input.getPosition().x < 0) {
@@ -39,7 +37,19 @@ void borderCrosser(sf::Shape& input) {
     }
 }
 
-bool collision(const sf::Shape& shape1, const sf::Shape& shape2) {
-    return (shape1.getGlobalBounds().intersects(shape2.getGlobalBounds()));
+
+bool collision(sf::Shape& shape, const sf::CircleShape& asteroid) {
+    for (int i = 0; i < shape.getPointCount(); i++) {
+        sf::Vector2f transformedPoint = shape.getTransform().transformPoint(shape.getPoint(i));
+        float xdist = abs(transformedPoint.x - asteroid.getPosition().x);
+        float ydist = abs(transformedPoint.y - asteroid.getPosition().y);
+        float distance = sqrt((xdist*xdist)+(ydist*ydist));
+        if (distance < asteroid.getRadius()) {
+            return true;
+        }
     }
+    return false;
+}
+
+
 

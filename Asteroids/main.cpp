@@ -40,9 +40,21 @@ int main(int argc, const char * argv[]) {
     window.setVerticalSyncEnabled(true); // vertical synchronization, call it once, after creating the window
     window.setMouseCursorVisible(false); //hide cursor
 
-
-    //make 20 asteroids
-    std::vector<Asteroid> asteroids = makeAsteroids(20);
+    
+    //create 20 asteroids - looses reference to the texture
+    std::vector<Asteroid> asteroids;
+    for(int i = 0; i < 20; i++){
+        Asteroid asteroid(2);
+        asteroids.push_back(asteroid);
+    }
+//    Asteroid asteroid1(2);
+//    Asteroid asteroid2(2);
+//    Asteroid asteroid3(2);
+//
+//    //make 20 asteroids
+//    std::vector<Asteroid> asteroids = makeAsteroids(20);
+    
+    
 ////////////////////////////////////////***OBJECTS SETUP***////////////////////////////////////////
     
     Ship ourShip;
@@ -110,11 +122,12 @@ int main(int argc, const char * argv[]) {
 
         for(int i = 0; i < asteroids.size(); i++) {
             for (int j = 0; j < laserVector.size(); j++) {
-                if (collision(asteroids[i].getShape(), laserVector[j].getShape())) {
+                if (collision(laserVector[j].getShape(), asteroids[i].getShape())) {
                     laserVector.erase(laserVector.begin()+j);
+                    //asteroids.erase(asteroids.begin()+i); //error: Object of type 'Asteroid' cannot be assigned because its copy assignment operator is implicitly deleted
+                    asteroids[i].Destroy(); //this works!
                     j--;
-                    // asteroids[j].Destroy(); //ERROR: Thread 1: EXC_BAD_ACCESS (code=1, address=0x18)
-                    // asteroids.erase(asteroids.begin()+j); //error: Object of type 'Asteroid' cannot be assigned because its copy assignment operator is implicitly deleted
+                   
                 }
             }
         }
@@ -144,8 +157,6 @@ int main(int argc, const char * argv[]) {
 //            }
         }
         
-        ourShip.getShape().getPoint(0);
-
         window.display();
         
     }
