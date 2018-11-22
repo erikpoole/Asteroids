@@ -27,7 +27,7 @@ int main(int argc, const char * argv[]) {
     
     sf::Vector2f resolution;
     resolution.x = sf::VideoMode::getDesktopMode().width;
-    resolution.y = sf::VideoMode::getDesktopMode().height;
+     resolution.y = sf::VideoMode::getDesktopMode().height;
     
     sf::Texture backgroundTexture;
     if (!backgroundTexture.loadFromFile("background2.jpg")){
@@ -43,7 +43,7 @@ int main(int argc, const char * argv[]) {
     
     //create 20 asteroids - looses reference to the texture
     std::vector<Asteroid> asteroids;
-    for(int i = 0; i < 10; i++){
+    for(int i = 0; i < 10  ; i++){
         Asteroid asteroid(2);
         asteroids.push_back(asteroid);
     }
