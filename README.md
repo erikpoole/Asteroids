@@ -1,6 +1,6 @@
 # Asteroids
 
-Made in collaboration with Ben Trueman.
+Made in collaboration with [Ben Trueman](https://github.com/btruemn "Ben Trueman").
 
 ## What This Is:
 
